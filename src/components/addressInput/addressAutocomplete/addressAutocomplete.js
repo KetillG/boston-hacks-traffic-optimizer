@@ -53,8 +53,6 @@ class InnerAddressAutocomplete extends Component {
     // Get the place details from the autocomplete object.
     var place = this.state.autocomplete.getPlace();
 
-    console.log(place);
-
     return;
   }
 
@@ -78,7 +76,6 @@ class InnerAddressAutocomplete extends Component {
 
   render() {
     const { fieldState } = this.props;
-    console.log(this.props.autocomplete);
     return (
       <React.Fragment>
         <BasicText
@@ -91,12 +88,6 @@ class InnerAddressAutocomplete extends Component {
           <small style={{ color: 'red' }}>{fieldState.error}</small>
         ) : null}
       </React.Fragment>
-      // <div
-      //   className="form-control"
-      //   id="autocomplete"
-      //   placeholder="Enter your address"
-      //   onFocus={this.geolocate.bind(this)}
-      // />
     );
   }
 }

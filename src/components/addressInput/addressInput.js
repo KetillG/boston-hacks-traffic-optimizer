@@ -4,7 +4,6 @@ import { Form, Text } from 'informed';
 import ReactDOM from 'react-dom';
 import AddressAutoComplete from './addressAutocomplete';
 import InformTimePicker from './../informTimePicker';
-import $ from 'jquery';
 
 class AddressInput extends Component {
   constructor(props) {
@@ -39,24 +38,6 @@ class AddressInput extends Component {
     }.bind(this);
   }
 
-  // initAutocomplete() {
-  //   // Create the autocomplete object, restricting the search to geographical
-  //   // location types.
-  //   let tempAC;
-  //   tempAC = new google.maps.places.Autocomplete(
-  //     /** @type {!HTMLInputElement} */ (document.getElementById(this.props.id)),
-  //     { types: ['geocode'] }
-  //   );
-
-  //   // When the user selects an address from the dropdown, populate the address
-  //   // fields in the form.
-  //   tempAC.addListener('place_changed', this.fillInAddress.bind(this));
-
-  //   this.setState({
-  //     autocomplete: tempAC,
-  //   });
-  // }
-
   // Submission
   onSubmitFailure(errors) {
     if (errors.password.length > 1) errors.password.pop();
@@ -76,8 +57,6 @@ class AddressInput extends Component {
     });
 
     const { dispatch } = this.props;
-    console.log(data);
-    //dispatch(signup({ data }));
   }
 
   // Form handling
@@ -87,19 +66,8 @@ class AddressInput extends Component {
 
   render() {
     const { errors, autocomplete: ac } = this.state;
-    console.log(ac);
     // Handles error
     let errorList = Object.entries(errors).map(e => <li key={e[0]}>{e[1]}</li>);
-
-    if ($('#dtpdepart').datetimepicker) {
-      console.log('aaa');
-      $('#dtpdepart').datetimepicker({ format: 'LT' });
-    }
-
-    $(function() {
-      console.log($('#dtpdepart'));
-      // $('#datetimepicker3').datetimepicker({ format: 'LT' });
-    });
 
     return (
       <div className="address-input content-contained">
@@ -163,7 +131,24 @@ class AddressInput extends Component {
 
             <div className="fieldset form-group">
               <label className="col-sm-2 control-label" htmlFor="depart">
-                Time
+                Depart from origin
+              </label>
+              <div className="col-sm-8">
+                <InformTimePicker
+                  field="depart"
+                  id="depart"
+                  className="form-control"
+                  placeholder=""
+                  validateOnChange
+                  validateOnBlur
+                />
+              </div>
+              <div className="col-sm-2"> </div>
+            </div>
+
+            <div className="fieldset form-group">
+              <label className="col-sm-2 control-label" htmlFor="leave">
+                Depart from destination
               </label>
               <div className="col-sm-8">
                 <InformTimePicker

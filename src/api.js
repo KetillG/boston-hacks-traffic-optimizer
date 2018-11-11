@@ -1,9 +1,15 @@
-// import { store, updateHistory } from './index';
-// import { logoutUser } from './actions/auth';
+import { store, updateHistory } from './index';
+import { logoutUser } from './actions/auth';
 
-const baseurl = process.env.REACT_APP_SERVICE_URL;
+// const baseurl = process.env.REACT_APP_SERVICE_URL;
 
-async function request({ method, endpoint = '', data, formdata } = {}) {
+async function request({
+  baseurl,
+  method,
+  endpoint = '',
+  data,
+  formdata,
+} = {}) {
   const token = window.localStorage.getItem('token');
 
   const url = `${baseurl}${endpoint}`;
@@ -40,12 +46,12 @@ async function request({ method, endpoint = '', data, formdata } = {}) {
     result = await response.json();
   }
   // If 401 then log user out
-  // if (response.status === 401) {
-  //   store.dispatch(logoutUser());
-  // }
-  // if (response.status === 404) {
-  //   updateHistory('/error/404');
-  // }
+  if (response.status === 401) {
+    store.dispatch(logoutUser());
+  }
+  if (response.status === 404) {
+    updateHistory('/error/404');
+  }
   return { result, status: response.status };
 }
 export { request };

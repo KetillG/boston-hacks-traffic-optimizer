@@ -8,6 +8,7 @@ import PageHeader from './components/pageHeader';
 import Footer from './components/footer';
 import Home from './components/home';
 import Signup from './components/signup';
+import Signout from './components/signout';
 import Login from './components/login';
 import UserRoute from './components/userRoute';
 
@@ -27,6 +28,7 @@ class App extends Component {
         <section className="content">
           <Switch>
             <Route exact path={`${baseurl}/signup`} component={Signup} />
+            <Route exact path={`${baseurl}/signout`} component={Signout} />
             <Route exact path={`${baseurl}/login`} component={Login} />
             <UserRoute
               exact

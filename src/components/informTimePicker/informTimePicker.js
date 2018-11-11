@@ -9,11 +9,13 @@ import { BasicText, asField } from 'informed';
 
 const InformTimePicker = asField(({ fieldState, ...props }) => (
   <React.Fragment>
-    <div className="input-group date" id={`dtp${this.props.id}`}>
+    <div className="input-group date" id={`dtp${props.id}`}>
       <BasicText
+        type="time"
+        id={props.id}
+        name={props.id}
         fieldState={fieldState}
         {...props}
-        style={fieldState.error ? { border: 'solid 1px red' } : null}
       />
       <span className="input-group-addon">
         <span className="glyphicon glyphicon-time" />

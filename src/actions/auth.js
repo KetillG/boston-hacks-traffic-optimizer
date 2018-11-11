@@ -34,8 +34,8 @@ function loginError(message) {
 }
 
 export function logout() {
-  // localStorage.removeItem('user');
-  // localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  localStorage.removeItem('token');
 
   return {
     type: LOGIN_LOGOUT,
@@ -46,6 +46,8 @@ export function logout() {
   };
 }
 
+const authUrl = process.env.REACT_APP_AUTH_URL;
+
 // Thunk!
 export const loginUser = (username, password) => {
   return async dispatch => {
@@ -54,6 +56,7 @@ export const loginUser = (username, password) => {
     let login;
     try {
       login = await request({
+        baseurl: authUrl,
         method: 'POST',
         endpoint: 'login',
         data: { username, password },
@@ -69,8 +72,8 @@ export const loginUser = (username, password) => {
 
     if (result && result.user) {
       const { user, token } = login.result;
-      // localStorage.setItem('user', JSON.stringify(user));
-      // localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('token', token);
       dispatch(receiveLogin(user, token));
     }
   };
@@ -79,5 +82,59 @@ export const loginUser = (username, password) => {
 export const logoutUser = () => {
   return async dispatch => {
     dispatch(logout());
+  };
+};
+
+export const USERS_ADD_REQUEST = 'USERS_ADD_REQUEST';
+export const USERS_ADD_ERROR = 'USERS_ADD_ERROR';
+export const USERS_ADD_SUCCESS = 'USERS_ADD_SUCCESS';
+
+export function addingUser() {
+  return {
+    type: USERS_ADD_REQUEST,
+    isAdding: true,
+    errors: null,
+    added: false,
+  };
+}
+
+function addUsersError(errors) {
+  return {
+    type: USERS_ADD_ERROR,
+    isAdding: false,
+    errors,
+    added: false,
+  };
+}
+
+function receiveAddUser() {
+  return {
+    type: USERS_ADD_SUCCESS,
+    isAdding: false,
+    added: true,
+    errors: null,
+  };
+}
+
+export const addUser = (name, username, password) => {
+  return async dispatch => {
+    dispatch(addingUser());
+    let user;
+    try {
+      user = await request({
+        baseurl: authUrl,
+        method: 'POST',
+        endpoint: 'register',
+        data: { name, username, password },
+      });
+    } catch (e) {
+      return dispatch(addUsersError([{ message: e }]));
+    }
+
+    if (user.status >= 400) {
+      return dispatch(addUsersError(user.result.errors));
+    }
+
+    dispatch(receiveAddUser());
   };
 };

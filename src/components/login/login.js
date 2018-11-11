@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import validator from 'email-validator';
 import { updateHistory } from './../../index';
 import './login.css';
+import { loginUser } from './../../actions/auth';
 
 class Login extends Component {
   constructor(props) {
@@ -23,15 +24,16 @@ class Login extends Component {
     formCheckboxes: [],
   };
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps && nextProps.isAuthenticated) {
-      updateHistory('/overview');
-    }
-    return true;
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log(nextProps);
+  //   if (nextProps && nextProps.isAuthenticated) {
+  //     updateHistory('/overview');
+  //   }
+  //   return true;
+  // }
 
   validateEmail = value => {
-    return !value || !validator.validate(value) ? 'Invalid email' : null;
+    return null; //return !value || !validator.validate(value) ? 'Invalid email' : null;
   };
 
   validatePassword = value => {
@@ -58,8 +60,7 @@ class Login extends Component {
     });
 
     const { dispatch } = this.props;
-    console.log(data);
-    //dispatch(signup({ data }));
+    dispatch(loginUser(data.username, data.password));
   }
 
   // Form handling
@@ -70,9 +71,11 @@ class Login extends Component {
   render() {
     const { isAuthenticated } = this.props;
 
-    // if (isAuthenticated) {
-    //   updateHistory('/overview');
-    // }
+    if (isAuthenticated) {
+      setTimeout(() => {
+        updateHistory('/overview');
+      }, 100);
+    }
 
     const { errors } = this.state;
 
@@ -100,14 +103,14 @@ class Login extends Component {
             onSubmit={this.onSubmit}
           >
             <div className="fieldset form-group">
-              <label className="col-sm-2 control-label" htmlFor="email">
-                Email
+              <label className="col-sm-2 control-label" htmlFor="username">
+                Username
               </label>
               <div className="col-sm-8">
                 <Text
                   className="form-control"
-                  field="email"
-                  id="email"
+                  field="username"
+                  id="username"
                   // validate={this.validateEmail}
                 />
               </div>

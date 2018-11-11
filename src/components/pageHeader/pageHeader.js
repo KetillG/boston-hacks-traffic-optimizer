@@ -66,7 +66,7 @@ class PageHeader extends Component {
 
   render() {
     const authNavigationButtons = this.authNavigationButtons();
-
+    console.log(this.props.user);
     return (
       <div className="page-header row">
         <div className="col-xs-6 left">
@@ -92,6 +92,7 @@ class PageHeader extends Component {
 const mapStateToProps = state => {
   return {
     authenticated: state.auth.isAuthenticated,
+    use: state.auth.user,
   };
 };
 

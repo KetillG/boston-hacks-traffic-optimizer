@@ -11,8 +11,7 @@ class Overview extends Component {
 
   getUserData() {
     const { user } = this.props;
-    console.log(user);
-    if (!user) {
+    if (!user || !user.data) {
       return <AddressInput />;
     } else {
       return null;
@@ -21,6 +20,9 @@ class Overview extends Component {
 
   render() {
     const getUserData = this.getUserData();
+
+    if (getUserData) return getUserData;
+
     return (
       <div className="overview">
         {getUserData}

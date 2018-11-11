@@ -6,12 +6,12 @@ import {
 } from '../actions/auth';
 
 // Get user from local storage
-// const user = JSON.parse(localStorage.getItem('user') || 'null');
-// const token = localStorage.getItem('token') || null;
-
+const user = JSON.parse(localStorage.getItem('user') || 'null');
+const token = localStorage.getItem('token') || null;
+console.log(!!token);
 const initialState = {
   isFetching: false,
-  isAuthenticated: false, //token ? true : false,
+  isAuthenticated: token ? true : false,
   user: null,
   token: null,
   isUpdating: false,

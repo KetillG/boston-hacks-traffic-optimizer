@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { Form, Text } from 'informed';
 import ReactDOM from 'react-dom';
 import validator from 'email-validator';
+import { connect } from 'react-redux';
 import './signup.css';
+import { addingUser, addUser } from './../../actions/auth';
+import { updateHistory } from './../../index';
 
 class Signup extends Component {
   constructor(props) {
@@ -20,6 +23,11 @@ class Signup extends Component {
     formSubmitted: false,
     formCheckboxes: [],
   };
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(addingUser());
+  }
 
   // Validation
   validateName = value => {
@@ -58,8 +66,7 @@ class Signup extends Component {
     });
 
     const { dispatch } = this.props;
-    console.log(data);
-    //dispatch(signup({ data }));
+    dispatch(addUser(data.name, data.name, data.password[0]));
   }
 
   // Form handling
@@ -72,6 +79,14 @@ class Signup extends Component {
 
     // Handles error
     let errorList = Object.entries(errors).map(e => <li key={e[0]}>{e[1]}</li>);
+
+    const { isFetching, added } = this.props;
+
+    if (added) {
+      updateHistory('/login');
+    }
+
+    const readOnly = isFetching ? 'readonly' : '';
 
     return (
       <div className="signup content-contained">
@@ -97,7 +112,7 @@ class Signup extends Component {
             onSubmitFailure={this.onSubmitFailure}
             onSubmit={this.onSubmit}
           >
-            <div className="fieldset form-group">
+            <div className="fieldset form-group" disabled={true}>
               <label className="col-sm-2 control-label" htmlFor="name">
                 Name
               </label>
@@ -107,6 +122,7 @@ class Signup extends Component {
                   field="name"
                   id="name"
                   validate={this.validateName}
+                  readOnly={readOnly}
                 />
               </div>
               <div className="col-sm-2"> </div>
@@ -120,6 +136,7 @@ class Signup extends Component {
                   className="form-control"
                   field="email"
                   id="email"
+                  readOnly={readOnly}
                   // validate={this.validateEmail}
                 />
               </div>
@@ -137,6 +154,7 @@ class Signup extends Component {
                   id="password-0"
                   type="password"
                   validate={this.validatePassword}
+                  readOnly={readOnly}
                 />
               </div>
               <div className="col-sm-2"> </div>
@@ -153,6 +171,7 @@ class Signup extends Component {
                   id="password-1"
                   type="password"
                   validate={this.validatePassword}
+                  readOnly={readOnly}
                 />
               </div>
               <div className="col-sm-2"> </div>
@@ -168,4 +187,12 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+const mapStateToProps = state => {
+  return {
+    isFetching: state.register.isFetching,
+    isAuthenticated: state.auth.isAuthenticated,
+    added: state.register.added,
+  };
+};
+
+export default connect(mapStateToProps)(Signup);
