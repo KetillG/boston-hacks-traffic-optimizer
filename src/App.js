@@ -11,6 +11,7 @@ import Signup from './components/signup';
 import Signout from './components/signout';
 import Login from './components/login';
 import UserRoute from './components/userRoute';
+import Alarm from './components/alarm';
 
 import Overview from './routes/overview';
 
@@ -30,11 +31,12 @@ class App extends Component {
             <Route exact path={`${baseurl}/signup`} component={Signup} />
             <Route exact path={`${baseurl}/signout`} component={Signout} />
             <Route exact path={`${baseurl}/login`} component={Login} />
+            <Route exact path={`${baseurl}/overview`} component={Overview} />
             <UserRoute
               exact
-              path={`${baseurl}/overview`}
+              path={`${baseurl}/alarm`}
               isAuthenticated={isAuthenticated}
-              component={Overview}
+              component={Alarm}
             />
             <Route exact path={`${baseurl}/`} component={Home} />
           </Switch>

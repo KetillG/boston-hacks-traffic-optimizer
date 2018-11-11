@@ -16,11 +16,16 @@ class Home extends Component {
           <div className="home__image--text">PROJECT NAME HERE</div>
         </div>
         <div className="home__detail content-contained">
-          <div>some text about why u want this</div>
-          <div>some more text about why you want to give us money</div>
-          <div>about the project</div>
-          <div>this is amazing</div>
-          <div>huge image of me here, very important</div>
+          <div>
+            Optimize your day with *name here*. *name here* gives you overview
+            of the estimated traffic and travel time from your place of home to
+            your workplace.
+          </div>
+          <div>
+            Sleep longer with *name here*. Sign up for our smart alarm system
+            that monitors the traffic and wakes you up as late as possible while
+            not being late for work.
+          </div>
         </div>
       </div>
     );

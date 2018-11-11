@@ -8,7 +8,6 @@ import {
 // Get user from local storage
 const user = JSON.parse(localStorage.getItem('user') || 'null');
 const token = localStorage.getItem('token') || null;
-console.log(!!token);
 const initialState = {
   isFetching: false,
   isAuthenticated: token ? true : false,

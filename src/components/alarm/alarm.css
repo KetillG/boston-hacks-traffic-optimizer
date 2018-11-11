@@ -1,0 +1,8 @@
+.alarm .pll {
+  text-align: left;
+}
+
+.alarm .errors {
+  color: red;
+  text-align: left;
+}

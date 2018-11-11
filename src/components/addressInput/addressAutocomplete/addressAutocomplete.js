@@ -52,7 +52,10 @@ class InnerAddressAutocomplete extends Component {
   fillInAddress() {
     // Get the place details from the autocomplete object.
     var place = this.state.autocomplete.getPlace();
-
+    this.props.fieldApi.setValue(place.formatted_address);
+    place.ownid = this.props.id;
+    if (!this.props.locationChange) return;
+    this.props.locationChange(place);
     return;
   }
 

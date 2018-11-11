@@ -10,8 +10,8 @@ class Overview extends Component {
   }
 
   getUserData() {
-    const { user } = this.props;
-    if (!user || !user.data) {
+    const { data } = this.props;
+    if (!data) {
       return <AddressInput />;
     } else {
       return null;
@@ -27,7 +27,7 @@ class Overview extends Component {
       <div className="overview">
         {getUserData}
         <div className="overview__day-selector">today, tomorrow</div>
-        <OverviewData data={{}} />
+        <OverviewData data={this.props.data} />
       </div>
     );
   }
@@ -36,6 +36,7 @@ class Overview extends Component {
 const mapStateToProps = state => {
   return {
     user: state.auth.user,
+    data: state.data.data,
   };
 };
 

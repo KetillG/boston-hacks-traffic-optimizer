@@ -21,6 +21,10 @@ class AddressInput extends Component {
     errors: {},
     formSubmitted: false,
     formCheckboxes: [],
+    privateData: {
+      origin: null,
+      destination: null,
+    },
   };
 
   componentDidMount() {
@@ -56,7 +60,10 @@ class AddressInput extends Component {
       errors: {},
     });
 
-    const { dispatch } = this.props;
+    console.log(data, this.state.privateData);
+
+    // const { dispatch } = this.props;
+    console.log(data);
   }
 
   // Form handling
@@ -64,10 +71,20 @@ class AddressInput extends Component {
     this.formApi = formApi;
   }
 
+  locationChange(data) {
+    const privateData = { ...this.state.privateData };
+    privateData[data.ownid] = data;
+    this.setState({
+      privateData: privateData,
+    });
+  }
+
   render() {
     const { errors, autocomplete: ac } = this.state;
     // Handles error
     let errorList = Object.entries(errors).map(e => <li key={e[0]}>{e[1]}</li>);
+
+    const locationChange = this.locationChange.bind(this);
 
     return (
       <div className="address-input content-contained">
@@ -106,6 +123,7 @@ class AddressInput extends Component {
                   validateOnChange
                   validateOnBlur
                   ac={ac ? 'value' : null}
+                  locationChange={locationChange}
                 />
               </div>
               <div className="col-sm-2"> </div>
@@ -124,6 +142,7 @@ class AddressInput extends Component {
                   validateOnChange
                   validateOnBlur
                   ac={ac ? 'value' : null}
+                  locationChange={locationChange}
                 />
               </div>
               <div className="col-sm-2"> </div>
@@ -152,8 +171,8 @@ class AddressInput extends Component {
               </label>
               <div className="col-sm-8">
                 <InformTimePicker
-                  field="depart"
-                  id="depart"
+                  field="leave"
+                  id="leave"
                   className="form-control"
                   placeholder=""
                   validateOnChange

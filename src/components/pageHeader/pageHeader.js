@@ -17,6 +17,20 @@ class PageHeader extends Component {
     }
   };
 
+  authRouteButtons() {
+    const { authenticated } = this.props;
+
+    if (authenticated) {
+      return (
+        <Link type="button" className="btn btn-success" to={`${baseurl}/alarm`}>
+          Alarm
+        </Link>
+      );
+    } else {
+      return null;
+    }
+  }
+
   authNavigationButtons() {
     const { authenticated } = this.props;
 
@@ -66,7 +80,8 @@ class PageHeader extends Component {
 
   render() {
     const authNavigationButtons = this.authNavigationButtons();
-    console.log(this.props.user);
+    const authRouteButtons = this.authRouteButtons();
+
     return (
       <div className="page-header row">
         <div className="col-xs-6 left">
@@ -80,6 +95,7 @@ class PageHeader extends Component {
           >
             Overview
           </Link>
+          {authRouteButtons}
         </div>
         <div className="col-xs-6 button-menu right">
           {authNavigationButtons}
