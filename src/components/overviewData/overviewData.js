@@ -10,7 +10,7 @@ class OverviewData extends Component {
       <div className="overview-data">
         <div className="overview-graphs">
           <OverviewGraph data={data.graph1} height="250" width="500" />
-          <div>graph2</div>
+          {/* <div>graph2</div> */}
         </div>
       </div>
     );

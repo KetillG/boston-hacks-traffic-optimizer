@@ -4,6 +4,8 @@ import { Form, Text } from 'informed';
 import ReactDOM from 'react-dom';
 import AddressAutoComplete from './addressAutocomplete';
 import InformTimePicker from './../informTimePicker';
+import { connect } from 'react-redux';
+import { getTravelData } from '../../actions/data';
 
 class AddressInput extends Component {
   constructor(props) {
@@ -62,8 +64,18 @@ class AddressInput extends Component {
 
     console.log(data, this.state.privateData);
 
-    // const { dispatch } = this.props;
+    const { privateData } = this.state;
+
+    const { dispatch } = this.props;
     console.log(data);
+    dispatch(
+      getTravelData(
+        privateData.origin.place_id,
+        privateData.destination.place_id,
+        data.depart,
+        data.leave
+      )
+    );
   }
 
   // Form handling
@@ -194,4 +206,11 @@ class AddressInput extends Component {
   }
 }
 
-export default AddressInput;
+const mapStateToProps = state => {
+  return {
+    isFetching: state.alarm.isFetching,
+    confirmed: state.alarm.confirmed,
+  };
+};
+
+export default connect(mapStateToProps)(AddressInput);

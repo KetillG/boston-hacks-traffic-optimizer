@@ -11,7 +11,7 @@ class Overview extends Component {
 
   getUserData() {
     const { data } = this.props;
-    if (!data) {
+    if (true || !data) {
       return <AddressInput />;
     } else {
       return null;
@@ -26,7 +26,7 @@ class Overview extends Component {
     return (
       <div className="overview">
         {getUserData}
-        <div className="overview__day-selector">today, tomorrow</div>
+        {/* <div className="overview__day-selector">today, tomorrow</div> */}
         <OverviewData data={this.props.data} />
       </div>
     );

@@ -60,7 +60,7 @@ class OverviewGraph extends Component {
 
     const graphCss = css({
       height,
-      width,
+      width: '100%',
     });
 
     return (
