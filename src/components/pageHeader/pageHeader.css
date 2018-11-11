@@ -1,0 +1,19 @@
+.page-header {
+  background-color: rgb(105, 105, 105);
+  margin: 0;
+  padding: 5px 0;
+  border: none;
+}
+
+.page-header .left {
+  text-align: left;
+}
+
+.page-header .right {
+  text-align: right;
+}
+
+.page-header .btn {
+  margin-left: 5px;
+  margin-right: 5px;
+}

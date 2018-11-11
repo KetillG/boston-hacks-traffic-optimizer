@@ -1,28 +1,53 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Helmet from 'react-helmet';
+
+import { connect } from 'react-redux';
+import { Route, Switch, withRouter } from 'react-router-dom';
+
+import PageHeader from './components/pageHeader';
+import Footer from './components/footer';
+import Home from './components/home';
+import Signup from './components/signup';
+import Login from './components/login';
+import UserRoute from './components/userRoute';
+
+import Overview from './routes/overview';
+
 import './App.css';
+
+const baseurl = process.env.REACT_APP_SUB_URL;
 
 class App extends Component {
   render() {
+    const { isAuthenticated } = this.props;
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <main className="App">
+        <Helmet defaultTitle="Reboot Hack" />
+        <PageHeader />
+        <section className="content">
+          <Switch>
+            <Route exact path={`${baseurl}/signup`} component={Signup} />
+            <Route exact path={`${baseurl}/login`} component={Login} />
+            <UserRoute
+              exact
+              path={`${baseurl}/overview`}
+              isAuthenticated={isAuthenticated}
+              component={Overview}
+            />
+            <Route exact path={`${baseurl}/`} component={Home} />
+          </Switch>
+        </section>
+        <Footer />
+      </main>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user,
+  };
+};
+
+export default withRouter(connect(mapStateToProps)(App));
